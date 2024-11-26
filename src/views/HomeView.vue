@@ -15,12 +15,12 @@ import { useTodoCreate } from '@/composables/todos/useTodoCreate'
 const loadingTodos = ref(true)
 const todosStore = useTodosStore()
 
-onMounted(() => {
+onMounted(async () => {
   try {
     loadingTodos.value = true
-    todosStore.loadTodos()
+    await todosStore.loadTodos()
   } catch (error) {
-    // error handling
+    console.log('error => ', error)
   } finally {
     loadingTodos.value = false
   }
@@ -32,7 +32,7 @@ const todos = computed(() => {
 })
 
 // Create
-const { todo, errors, create } = useTodoCreate()
+const { todo, errors, loading: loadingCreate, create } = useTodoCreate()
 
 // Remove
 const LazyDialogConfirm = defineAsyncComponent({
@@ -70,8 +70,8 @@ watch(
   <LayoutDefault>
     <section class="space-y-4 mb-10">
       <BaseTitle label="Crie sua tarefa" as="h1" />
-      <TodoFormCreateLoader :loading="false">
-        <TodoFormCreate v-model="todo" @submited="create" :errors="errors" :loading="false" />
+      <TodoFormCreateLoader :loading="loadingTodos">
+        <TodoFormCreate v-model="todo" @submited="create" :errors="errors" :loading="loadingCreate" />
       </TodoFormCreateLoader>
     </section>
 
@@ -79,7 +79,7 @@ watch(
       <div class="flex flex-wrap gap-3 justify-between">
         <BaseTitle size="sm" label="Minhas tarefas" />
 
-        <div class="flex gap-2">
+        <div class="flex gap-2" v-if="!loadingTodos">
           <BaseButton
             :variant="seletedFilter === 'uncompleted' ? 'solid' : 'ghost'"
             @click="seletedFilter = 'uncompleted'"
@@ -93,7 +93,7 @@ watch(
         </div>
       </div>
 
-      <TodoListLoader :loading="false">
+      <TodoListLoader :loading="loadingTodos">
         <TodoList v-auto-animate v-if="todos.length > 0">
           <TodoItem
             v-for="todo in todos"

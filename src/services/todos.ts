@@ -1,31 +1,42 @@
-import { TODOS_KEY } from '@/constants/localKeys'
 import type { Todo } from '@/types'
+import axios from 'axios'
+
+const api = axios.create({
+  baseURL: 'http://localhost:3000/todos',
+  timeout: 6000,
+})
 
 export default () => ({
-  getAll() {
-    const todos = localStorage.getItem(TODOS_KEY)
-    return todos ? (JSON.parse(todos) as Todo[]) : []
+  async getAll() {
+    try {
+      const response = await api.get<Todo[]>('/')
+      return response.data
+    } catch (error) {
+      throw new Error('Não foi possível buscar os dados')
+    }
   },
 
-  create(newTodo: Todo) {
-    const todos = this.getAll()
-    localStorage.setItem(TODOS_KEY, JSON.stringify([...todos, newTodo]))
+  async create(newTodo: Todo) {
+    try {
+      await api.post('/', newTodo)
+    } catch (error) {
+      throw new Error('Não foi possível criar o todo')
+    }
   },
 
-  complete(id: string) {
-    const todos = this.getAll()
-    todos.map((todo) => {
-      if (todo.id === id) {
-        todo.completed = true
-      }
-      return todo
-    })
-
-    localStorage.setItem(TODOS_KEY, JSON.stringify([...todos]))
+  async complete(todo: Todo) {
+    try {
+      await api.put(`/${todo.id}`, todo)
+    } catch (error) {
+      throw new Error('Não foi possível completar o todo')
+    }
   },
 
-  remove(id: string) {
-    const todos = this.getAll().filter((todo) => todo.id !== id)
-    localStorage.setItem(TODOS_KEY, JSON.stringify([...todos]))
+  async remove(id: string) {
+    try {
+      await api.delete(`/${id}`)
+    } catch (error) {
+      throw new Error('Não foi possível remover o todo')
+    }
   },
 })

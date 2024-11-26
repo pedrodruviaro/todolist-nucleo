@@ -19,8 +19,8 @@ const emits = defineEmits<{
   <li class="p-2.5 border rounded flex justify-between items-center gap-3 flex-wrap sm:flex-nowrap">
     <p :class="{ 'line-through': props.completed }">{{ props.todo }}</p>
 
-    <div class="flex gap-2" v-if="!props.completed">
-      <BaseTooltip text="Concluir">
+    <div class="flex gap-2">
+      <BaseTooltip text="Concluir" v-if="!props.completed">
         <BaseButton @click="emits('complete', props.id)" variant="icon">
           <Icon icon="mdi:check" />
         </BaseButton>
