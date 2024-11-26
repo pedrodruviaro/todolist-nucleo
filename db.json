@@ -1,19 +1,14 @@
 {
   "todos": [
     {
-      "id": "3e774ad3-be15-4f05-985f-c4921ca653d6",
-      "completed": false,
-      "todo": "Estudar TS"
-    },
-    {
       "id": "02d6f9bb-8154-40ab-ba5d-245694285d73",
       "completed": false,
       "todo": "Estudar Python"
     },
     {
-      "id": "71423b22-d85b-4009-948f-9732fecf525b",
+      "id": "ddee4878-0949-47fa-84ac-a597e501cc5e",
       "completed": false,
-      "todo": "Fazer a janta"
+      "todo": "Estudar python"
     }
   ]
 }
