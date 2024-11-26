@@ -29,7 +29,7 @@ const handleSubmit = () => {
 
 <template>
   <form class="grid gap-2 sm:flex" @submit.prevent="handleSubmit">
-    <BaseInput v-model="todo" v-auto-focus ref="todoInputRef" />
+    <BaseInput aria-label="Tarefa" v-model="todo" v-auto-focus ref="todoInputRef" />
     <BaseButton :loading="props.loading" type="submit">Criar</BaseButton>
   </form>
   <span class="text-red-500 text-sm" v-if="errors?.todo?._errors">{{ errors.todo._errors[0] }}</span>

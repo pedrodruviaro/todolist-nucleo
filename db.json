@@ -1,19 +1,19 @@
 {
   "todos": [
     {
-      "id": "26909efe-18f8-4744-81c2-432237e21532",
-      "completed": false,
-      "todo": "Estudar Vue"
-    },
-    {
-      "id": "e64aadaf-48c0-485a-bdb3-47cde192e901",
-      "completed": false,
-      "todo": "Estudar PHP"
-    },
-    {
       "id": "3e774ad3-be15-4f05-985f-c4921ca653d6",
       "completed": false,
       "todo": "Estudar TS"
+    },
+    {
+      "id": "02d6f9bb-8154-40ab-ba5d-245694285d73",
+      "completed": false,
+      "todo": "Estudar Python"
+    },
+    {
+      "id": "71423b22-d85b-4009-948f-9732fecf525b",
+      "completed": false,
+      "todo": "Fazer a janta"
     }
   ]
 }

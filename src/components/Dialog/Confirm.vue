@@ -2,7 +2,8 @@
 import BaseTitle from '@/components/Base/Title.vue'
 import BaseButton from '@/components/Base/Button.vue'
 import { useClickOutside } from '@/composables/useClickOutside'
-import { ref } from 'vue'
+import { nextTick, ref, watch } from 'vue'
+import { useFocusTrap } from '@vueuse/integrations/useFocusTrap'
 
 const props = withDefaults(
   defineProps<{
@@ -20,7 +21,22 @@ const emits = defineEmits<{
 const isOpen = defineModel<boolean>()
 
 const modalRef = ref<HTMLElement | null>(null)
+
 useClickOutside(modalRef, () => (isOpen.value = false))
+
+const { activate, deactivate } = useFocusTrap(modalRef)
+
+watch(
+  () => isOpen.value,
+  async (open) => {
+    if (open) {
+      await nextTick()
+      activate()
+    } else {
+      deactivate()
+    }
+  },
+)
 </script>
 
 <template>
@@ -28,7 +44,10 @@ useClickOutside(modalRef, () => (isOpen.value = false))
     <Transition name="fade-transition">
       <div
         v-show="isOpen"
+        role="dialog"
+        aria-modal="true"
         class="fixed inset-0 top-0 grid h-full w-full place-items-center bg-neutral-500 bg-opacity-50"
+        @keydown.esc="isOpen = false"
       >
         <Transition name="modal-transition" mode="out-in">
           <div ref="modalRef" v-if="isOpen" class="w-[94%] max-w-max rounded-lg bg-neutral-50 p-4">
@@ -40,6 +59,7 @@ useClickOutside(modalRef, () => (isOpen.value = false))
                 :disabled="props.loading"
                 @click="isOpen = false"
               />
+
               <BaseButton :label="props.confirmLabel" :loading="props.loading" @click="emits('confirm')" />
             </div>
           </div>
