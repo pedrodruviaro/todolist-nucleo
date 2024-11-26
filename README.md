@@ -1,7 +1,5 @@
 # TodoList
 
-- Demo: https://todolist-nucleo.netlify.app/
-
 - Caso não queira baixar o projeto, aqui está o vídeo de demonstração: https://www.youtube.com/watch?v=CXuXswJlCLk
 
 ## Plano de Implementação
