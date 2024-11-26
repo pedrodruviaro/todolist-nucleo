@@ -44,9 +44,9 @@ const customButtonClasses = computed(() => [
 
 <template>
   <component
+    class="flex items-center justify-center gap-2 rounded text-center disabled:opacity-50 disabled:cursor-not-allowed"
     :is="componentToRender"
     :to="props.to"
-    class="flex items-center justify-center gap-2 rounded text-center disabled:opacity-50 disabled:cursor-not-allowed"
     :class="customButtonClasses"
     :disabled="props.loading"
   >
