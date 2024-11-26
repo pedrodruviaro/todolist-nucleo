@@ -2,11 +2,17 @@
 
 - Demo: https://todolist-nucleo.netlify.app/
 
+- Caso não queira baixar o projeto, aqui está o vídeo de demonstração: https://www.youtube.com/watch?v=CXuXswJlCLk
+
 ## Plano de Implementação
 
 ### Estrutura do Projeto
 
-- components => componentes contendo loaders (HOC) seguem o padrão `index.vue` + `Loader.vue`.
+- components
+
+  - Base -> todos os componentes "primitivos" que são altamente reutilizáveis, como botões, títulos, input, etc.
+
+  - componentes contendo loaders (HOC) seguem o padrão `index.vue` + `Loader.vue`.
 
 - composables => todos os composables da aplicação. Separados por features ou global (sem pastas). Composables como` useTodoCreate.ts` chamam uma action da store que chama um serviço.
 
