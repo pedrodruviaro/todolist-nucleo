@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import BaseTitle from '@/components/Base/Title.vue'
 import BaseButton from '@/components/Base/Button.vue'
+import { useClickOutside } from '@/composables/useClickOutside'
+import { ref } from 'vue'
 
 const props = withDefaults(
   defineProps<{
@@ -16,6 +18,9 @@ const emits = defineEmits<{
 }>()
 
 const isOpen = defineModel<boolean>()
+
+const modalRef = ref<HTMLElement | null>(null)
+useClickOutside(modalRef, () => (isOpen.value = false))
 </script>
 
 <template>
@@ -26,7 +31,7 @@ const isOpen = defineModel<boolean>()
         class="fixed inset-0 top-0 grid h-full w-full place-items-center bg-neutral-500 bg-opacity-50"
       >
         <Transition name="modal-transition" mode="out-in">
-          <div v-if="isOpen" class="w-[94%] max-w-max rounded-lg bg-neutral-50 p-4">
+          <div ref="modalRef" v-if="isOpen" class="w-[94%] max-w-max rounded-lg bg-neutral-50 p-4">
             <BaseTitle size="xs" :label="props.label" />
             <div class="mt-6 flex items-center gap-4">
               <BaseButton
@@ -35,11 +40,7 @@ const isOpen = defineModel<boolean>()
                 :disabled="props.loading"
                 @click="isOpen = false"
               />
-              <BaseButton
-                :label="props.confirmLabel"
-                :loading="props.loading"
-                @click="emits('confirm')"
-              />
+              <BaseButton :label="props.confirmLabel" :loading="props.loading" @click="emits('confirm')" />
             </div>
           </div>
         </Transition>

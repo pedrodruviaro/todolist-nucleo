@@ -11,7 +11,6 @@ const props = defineProps<{
 
 const emits = defineEmits<{
   complete: [id: string]
-  edit: [id: string]
   remove: [id: string]
 }>()
 </script>
@@ -24,12 +23,6 @@ const emits = defineEmits<{
       <BaseTooltip text="Concluir">
         <BaseButton @click="emits('complete', props.id)" variant="icon">
           <Icon icon="mdi:check" />
-        </BaseButton>
-      </BaseTooltip>
-
-      <BaseTooltip text="Editar">
-        <BaseButton @click="emits('edit', props.id)" variant="icon">
-          <Icon icon="mdi:edit" />
         </BaseButton>
       </BaseTooltip>
 
